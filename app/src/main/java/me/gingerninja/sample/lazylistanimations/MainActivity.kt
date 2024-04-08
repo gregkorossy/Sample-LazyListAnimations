@@ -13,9 +13,12 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.WindowInsetsSides
+import androidx.compose.foundation.layout.asPaddingValues
+import androidx.compose.foundation.layout.calculateEndPadding
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.navigationBars
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.only
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.windowInsetsPadding
@@ -141,9 +144,9 @@ class MainActivity : ComponentActivity() {
                 ) { innerPadding ->
                     Column(
                         modifier = Modifier
-                            .fillMaxSize()
-                            .padding(innerPadding),
-                        horizontalAlignment = Alignment.CenterHorizontally
+                            .padding(top = innerPadding.calculateTopPadding())
+                            .fillMaxSize(),
+                        horizontalAlignment = Alignment.CenterHorizontally,
                     ) {
                         SingleChoiceSegmentedButtonRow {
                             SegmentedButton(
@@ -304,7 +307,8 @@ fun AnimatedLazyColumn(
 
     LazyColumn(
         modifier = modifier,
-        state = state
+        state = state,
+        contentPadding = WindowInsets.navigationBars.asPaddingValues(),
     ) {
         itemsIndexed(items = items, key = { _, item -> item.id }) { index, item ->
             ItemCard(
